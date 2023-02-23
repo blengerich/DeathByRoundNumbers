@@ -6,6 +6,7 @@ from sklearn.metrics import roc_auc_score as auc
 from sklearn.model_selection import train_test_split
 from interpret.glassbox import ExplainableBoostingClassifier as ebc
 from sklearn.neural_network import MLPClassifier
+from sklearn.linear_model import LogisticRegression
 from xgboost import XGBClassifier
 from sklearn.calibration import CalibratedClassifierCV
 
@@ -50,6 +51,12 @@ def evaluate_model(model, X_train, X_test, Y_train, Y_test):
     print_metric_result(f1_score, "F1", True, False)
     print_metric_result(f1_score, "F1", False, False)
     
+
+def fit_lr(X_train, X_test, Y_train, Y_test):
+    lr = LogisticRegression()
+    lr.fit(X_train, Y_train)
+    evaluate_model(lr, X_train, X_test, Y_train, Y_test)
+   
     
 def fit_xgb1(X_train, X_test, Y_train, Y_test):
     xgb = XGBClassifier(max_depth=1, n_estimators=1000)
@@ -77,6 +84,8 @@ def fit_mlp(X_train, X_test, Y_train, Y_test):
 
 def run_experiment(X, Y, n_bootstraps=1):
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
+    print("="*20 + "\nLR\n" + "="*10)
+    fit_lr(X_train.values, X_test.values, Y_train, Y_test)
     print("="*20 + "\nXGB-1\n" + "="*10)
     fit_xgb1(X_train.values, X_test.values, Y_train, Y_test)
     print("="*20 + "\nXGB-2\n" + "="*10)
