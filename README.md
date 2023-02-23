@@ -1,34 +1,39 @@
-[Death by Round Numbers and Sharp Thresholds: How to Avoid Dangerous AI EHR Recommendations](https://www.medrxiv.org/content/10.1101/2022.04.30.22274520v1)
+[Death by Round Numbers: Glass-Box Machine Learning Uncovers Biases in Medical Practice](https://www.medrxiv.org/content/10.1101/2022.04.30.22274520v2)
 
-Biases in medical practice around round numbers lead to measurable increases in mortality rates. We can use the high-resolution interpretable machine learning models to uncover these biases and identify opportunities to improve clinical practice.
+Real-world evidence is confounded by treatments, so data-driven systems can learn to recapitulate biases that influenced treatment decisions. This confounding presents a challenge: uninterpretable black-box systems can put patients at risk by confusing treatment benefits with intrinsic risk, but also an opportunity: interpretable “glass-box” models can improve medical practice by highlighting unexpected patterns which suggest biases in medical practice.
+
+This repo contains examples of how to find these statistical artifacts and biases in a pneumonia dataset and MIMIC-II, MIMIC-III< and MIMIC-IV.
+
+It makes use of two automated tools:
+- `find_and_plot_discontinuities`, which automatically finds discontinuous effects in your data.
+- `find_and_plot_non_monotonicities`, which automatically finds non-monotone effects in your data.
+
+Both of these tools are available in the [https://github.com/blengerich/ebm_utils](ebm_utils) package. This package can be installed via:
+`pip install git+https://github.com/blengerich/ebm_utils`. And the tools are located in `ebm_utils.analysis.changepoints`.
 
 If you use these ideas, code, or results, please cite:
 ```
 @article{lengerich2022death,
-  title={Death by Round Numbers and Sharp Thresholds: How to Avoid Dangerous AI EHR Recommendations},
+  title={Death by Round Numbers: Glass-Box Machine Learning Uncovers Biases in Medical Practice},
   author={Lengerich, Benjamin J and Caruana, Rich and Nunnally, Mark E and Kellis, Manolis},
   journal={medRxiv},
   year={2022},
   publisher={Cold Spring Harbor Laboratory Press}
 }
 ```
-The manuscript is currently available on [Medrxiv](https://www.medrxiv.org/content/10.1101/2022.04.30.22274520v1). 
+The manuscript is currently available on [Medrxiv](https://www.medrxiv.org/content/10.1101/2022.04.30.22274520v2). 
 
 ![Preview](Figure1.png)
-Figure 1: Real-world confounding factors are treacherous to data-driven risk models, especially when data-driven
-risk models are intended to be used to guide treatment decisions. (A) The mortality risk of pneumonia patients
-suggests that high levels of serum creatinine (which indicate kidney failure) are associated with better survival, even
-after correcting for other risk factors in a multivariable predictive model. The sharp inflection points in mortality
-odds ratio at the round numbers of 3mg/dL and 5mg/dL suggest that this association between elevated creatinine and
-reduced mortality is prompted by discrete treatment thresholds rather than smooth biomedical risk factors. While this
-confounding between risk factor and clinical decisions is a challenge for data-driven analysis (a naïve triage model
-would withhold treatment from patients with elevated serum creatinine, precisely those who most need treatment), it
-is also a blessing: the non-monotonicity alerts us to an opportunity to optimize treatment protocols. (B) Causal flow
-underlying “treatment” effects. Causal arrows are filled, observed variables are shown in gray ovals and unobserved
-variables in white boxes. Data-driven analyses often estimate P(Outcome|Biomarker), but this is only a faithful
-surrogate for P(Outcome|Underlying Risk) if treatments were to have negligible impacts on the outcome. In reality,
-treatments (broadly defined, including monitoring, therapeutics, diagnostics, and patient behavior) have significant
-impacts and frequently lead to “paradoxical” effects in which data-driven systems assign low risk to high-risk patients
-precisely because the high-risk patients are most likely to be effectively treated. To build models which can effectively
-guide treatment decisions, we require intelligible models and medical domain knowledge to audit the probabilistic
-models and understand if all relevant treatment effects have been sufficiently corrected.
+Figure 1: Confounding effects are treacherous to data-driven risk models, but confounding effects that are revealed by
+glass-box models can be useful by suggesting potential improvements in medicine. (A) Underlying “treatment effects”
+confound risk models. Causal arrows are filled, observed variables are shown in gray ovals and unobserved variables
+in white boxes. Data-driven analyses often estimate P(Outcome|Biomarker), but this is only a faithful surrogate
+for P(Outcome|Underlying Risk) if treatments were to have negligible impacts. In reality, treatments (broadly interpreted, including monitoring, therapeutics, diagnostics, and patient behavior) have large impacts on outcomes. When
+explicitly analyzed for treatment effectiveness, effects of randomly-assigned treatments are desirable as evidence of a
+proposed treatment being effective, but strong treatment effects confound estimation of risk. To build models which
+can effectively guide treatment decisions, we require intelligible models and medical domain knowledge to understand
+if all relevant confounders have been sufficiently corrected. (B) An example of strong, but useful, confounding: the
+mortality risk of pneumonia patients falls with extremely high levels of serum creatinine (which indicates kidney failure), even after correcting for other risk factors in a multivariable predictive model. This counter-causal relationship
+suggests confounding, and the sharp inflections at the round numbers of 3mg/dL and 5mg/dL (denoted by black vertical lines) suggest that this association is guided by discrete treatment thresholds rather than smooth biomedical risk
+factors. While this confounding between risk factor and clinical decisions is a challenge for data-driven analysis, it is
+also an opportunity because the unexpected inflections alert us to possibilities of optimizing treatment
