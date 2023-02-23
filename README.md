@@ -10,11 +10,12 @@ It makes use of two automated tools:
 - `find_and_plot_discontinuities`, which automatically finds discontinuous effects in your data.
 - `find_and_plot_non_monotonicities`, which automatically finds non-monotone effects in your data.
 
-Both of these tools are available in the [https://github.com/blengerich/ebm_utils](ebm_utils) package. This package can be installed via:
+The first tool is summarized in (B) below, and the second tool is summarized in (C) below:
+![Preview](images/model_and_tests.png)
+
+Both of these tools are available in the [ebm_utils](https://github.com/blengerich/ebm_utils) package. This package can be installed via:
 `pip install git+https://github.com/blengerich/ebm_utils`. And the tools are located in `ebm_utils.analysis.changepoints`.
 
-
-![Preview](images/model_and_tests.png)
 
 
 ## Citing
