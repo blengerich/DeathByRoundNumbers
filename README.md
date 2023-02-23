@@ -1,8 +1,10 @@
-[Death by Round Numbers: Glass-Box Machine Learning Uncovers Biases in Medical Practice](https://www.medrxiv.org/content/10.1101/2022.04.30.22274520v2)
+# [Death by Round Numbers: Glass-Box Machine Learning Uncovers Biases in Medical Practice](https://www.medrxiv.org/content/10.1101/2022.04.30.22274520v2)
 
 Real-world evidence is confounded by treatments, so data-driven systems can learn to recapitulate biases that influenced treatment decisions. This confounding presents a challenge: uninterpretable black-box systems can put patients at risk by confusing treatment benefits with intrinsic risk, but also an opportunity: interpretable “glass-box” models can improve medical practice by highlighting unexpected patterns which suggest biases in medical practice.
 
 This repo contains examples of how to find these statistical artifacts and biases in a pneumonia dataset and MIMIC-II, MIMIC-III< and MIMIC-IV.
+
+## Automated Search for Statistical Artifacts
 
 It makes use of two automated tools:
 - `find_and_plot_discontinuities`, which automatically finds discontinuous effects in your data.
@@ -10,6 +12,12 @@ It makes use of two automated tools:
 
 Both of these tools are available in the [https://github.com/blengerich/ebm_utils](ebm_utils) package. This package can be installed via:
 `pip install git+https://github.com/blengerich/ebm_utils`. And the tools are located in `ebm_utils.analysis.changepoints`.
+
+
+![Preview](images/model_and_tests.png)
+
+
+## Citing
 
 If you use these ideas, code, or results, please cite:
 ```
@@ -23,7 +31,7 @@ If you use these ideas, code, or results, please cite:
 ```
 The manuscript is currently available on [Medrxiv](https://www.medrxiv.org/content/10.1101/2022.04.30.22274520v2). 
 
-![Preview](Figure1.png)
+![Preview](images/Figure1.png)
 Figure 1: Confounding effects are treacherous to data-driven risk models, but confounding effects that are revealed by
 glass-box models can be useful by suggesting potential improvements in medicine. (A) Underlying “treatment effects”
 confound risk models. Causal arrows are filled, observed variables are shown in gray ovals and unobserved variables
